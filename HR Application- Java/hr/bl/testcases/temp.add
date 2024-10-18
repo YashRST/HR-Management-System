@@ -1,0 +1,68 @@
+try
+{
+EmployeeInterface employee=new Employee();
+DesignationManagerInterface designationManager=DesignationManager.getInstance();
+System.out.println("____Employee ADD Module____");
+System.out.print("Name : ");
+String name=Keyboard.getString();
+employee.setName(name);
+List<DesignationInterface> designations=designationManager.getDesignations();
+for(DesignationInterface designation:designations) System.out.println("Code : "+designation.getCode()+", Title : "+designation.getTitle());
+System.out.print("Designation Code : ");
+int designationCode=Keyboard.getInt();
+employee.setDesignation(designationManager.getByCode(designationCode));
+java.util.Date dob=null;
+System.out.print("Date of Birth : ");
+try
+{
+SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
+dob=sdf.parse(Keyboard.getString());
+}catch(ParseException pe)
+{
+System.out.println(pe);
+}
+employee.setDateOfBirth(dob);
+System.out.print("Salary : ");
+BigDecimal basicSalary=new BigDecimal(Keyboard.getString());
+employee.setBasicSalary(basicSalary);
+System.out.println("1 -> Male"+"\n"+"2 -> Female");
+System.out.print("Gender : ");
+int gen=Keyboard.getInt();
+if(gen==1)
+{
+employee.setGender(EmployeeInterface.MALE);
+}
+if(gen==2)
+{
+employee.setGender(EmployeeInterface.FEMALE);
+}
+if(gen!=1 && gen!=2) 
+{
+System.out.println("Invalid input");
+continue;
+}
+System.out.print("Is indian : ");
+System.out.println("1. Yes "+"\n"+"2. No");
+int ch=Keyboard.getInt();
+if(ch==1) 
+{
+employee.isIndian(true);
+}else if(ch==2)
+{
+employee.isIndian(false);
+}else
+{
+System.out.println("Invalid input");
+continue;
+}
+System.out.print("PAN Number : ");
+String PANNumber=Keyboard.getString();
+employee.setPANNumber(PANNumber);
+System.out.print("AadharCardNumber : ");
+String aadharCardNumber=Keyboard.getString();
+employee.setAadharCardNumber(aadharCardNumber);
+employeeManager.add(employee);
+}catch(BLException blException)
+{
+System.out.println(blException);
+}
